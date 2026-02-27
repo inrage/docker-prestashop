@@ -20,9 +20,9 @@ Key features:
 
 | Tag | PHP | Apache | Base |
 |-----|-----|--------|------|
-| `8.0` | PHP 8.0 | Apache 2.4.66 | Debian Bookworm |
-| `7.4`, `latest` | PHP 7.4 | Apache 2.4.66 | Debian Bookworm |
-| `7.2` | PHP 7.2 | Apache 2.4.66 | Debian Bookworm |
+| `8.0` | PHP 8.0.30 | Apache 2.4.66 | Debian Bookworm |
+| `7.4`, `latest` | PHP 7.4.33 | Apache 2.4.66 | Debian Bookworm |
+| `7.2` | PHP 7.2.34 | Apache 2.4.66 | Debian Bookworm |
 
 ## Quick Start
 
