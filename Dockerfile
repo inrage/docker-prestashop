@@ -34,6 +34,7 @@ RUN apt-get update \
        php${PHP_VERSION}-xml \
        php${PHP_VERSION}-zip \
        php${PHP_VERSION}-memcached \
+       php${PHP_VERSION}-redis \
     && if dpkg --compare-versions "${PHP_VERSION}" lt "8.0"; then \
          apt-get install -y --no-install-recommends php${PHP_VERSION}-json; \
        fi \
@@ -62,5 +63,8 @@ COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 WORKDIR /var/www/html
 
 EXPOSE 80
+
+HEALTHCHECK --interval=30s --timeout=5s --start-period=60s --retries=3 \
+    CMD curl -f http://localhost:80/ || exit 1
 
 ENTRYPOINT ["docker-entrypoint.sh"]
