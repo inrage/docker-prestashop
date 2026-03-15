@@ -50,7 +50,10 @@ COPY config/apache/deflate.conf /etc/apache2/conf-available/deflate.conf
 COPY config/apache/expires.conf /etc/apache2/conf-available/expires.conf
 
 RUN a2ensite 000-default \
-    && a2enconf security remoteip deflate expires
+    && a2enconf security remoteip deflate expires \
+    && ln -sf /dev/stderr /var/log/apache2/error.log \
+    && ln -sf /dev/stdout /var/log/apache2/access.log \
+    && echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
 COPY config/php/prestashop.ini /etc/php/${PHP_VERSION}/apache2/conf.d/99-prestashop.ini
 
