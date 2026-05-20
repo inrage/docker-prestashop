@@ -4,7 +4,7 @@
 [![Docker Stars](https://img.shields.io/docker/stars/inrage/docker-prestashop.svg)](https://hub.docker.com/r/inrage/docker-prestashop)
 [![Docker Image Size](https://img.shields.io/docker/image-size/inrage/docker-prestashop.svg)](https://hub.docker.com/r/inrage/docker-prestashop)
 
-Production-ready Docker image for PrestaShop 1.7 websites. Based on Debian Bookworm with Apache 2.4 and PHP via [Sury](https://packages.sury.org/php/) repository.
+Production-ready Docker image for PrestaShop 1.7 and 8.x websites. Based on Debian Bookworm with Apache 2.4 and PHP via [Sury](https://packages.sury.org/php/) repository.
 
 Key features:
 
@@ -20,6 +20,7 @@ Key features:
 
 | Tag | PHP | Apache | Base |
 |-----|-----|--------|------|
+| `8.1` | PHP 8.1.34 | Apache 2.4.67 | Debian Bookworm |
 | `8.0` | PHP 8.0.30 | Apache 2.4.67 | Debian Bookworm |
 | `7.4`, `latest` | PHP 7.4.33 | Apache 2.4.67 | Debian Bookworm |
 | `7.2` | PHP 7.2.34 | Apache 2.4.67 | Debian Bookworm |
@@ -129,6 +130,7 @@ The image sets the following headers by default:
 docker build --build-arg PHP_VERSION=7.4 -t inrage/docker-prestashop:7.4 .
 docker build --build-arg PHP_VERSION=7.2 -t inrage/docker-prestashop:7.2 .
 docker build --build-arg PHP_VERSION=8.0 -t inrage/docker-prestashop:8.0 .
+docker build --build-arg PHP_VERSION=8.1 -t inrage/docker-prestashop:8.1 .
 ```
 
 ## License
