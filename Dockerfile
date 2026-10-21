@@ -39,6 +39,17 @@ RUN apt-get update \
     && if dpkg --compare-versions "${PHP_VERSION}" lt "8.0"; then \
          apt-get install -y --no-install-recommends php${PHP_VERSION}-json; \
        fi \
+    && if [ "${PHP_VERSION}" = "5.6" ]; then \
+         apt-get install -y --no-install-recommends php5.6-mcrypt php5.6-sqlite3 msmtp \
+         && printf '; priority=99\ndate.timezone = Europe/Paris\nsendmail_path = /usr/bin/msmtp -t\nopcache.revalidate_freq = 0\n' > /etc/php/5.6/mods-available/ps56.ini \
+         && phpenmod -v 5.6 ps56 \
+         && curl -fsSL https://downloads.ioncube.com/loader_downloads/ioncube_loaders_lin_x86-64.tar.gz \
+            | tar -xz -C /tmp ioncube/ioncube_loader_lin_5.6.so \
+         && install -m 644 /tmp/ioncube/ioncube_loader_lin_5.6.so "$(php5.6 -r 'echo ini_get("extension_dir");')/" \
+         && rm -rf /tmp/ioncube \
+         && printf '; priority=00\nzend_extension=ioncube_loader_lin_5.6.so\n' > /etc/php/5.6/mods-available/ioncube.ini \
+         && phpenmod -v 5.6 ioncube; \
+       fi \
     && a2enmod rewrite headers deflate expires ssl remoteip \
     && a2dissite 000-default \
     && apt-get clean \

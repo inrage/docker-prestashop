@@ -25,6 +25,7 @@ Key features:
 | `7.4`, `latest` | PHP 7.4.33 | Apache 2.4.68 | Debian Bookworm |
 | `7.3` | PHP 7.3.33 | Apache 2.4.68 | Debian Bookworm |
 | `7.2` | PHP 7.2.34 | Apache 2.4.68 | Debian Bookworm |
+| `5.6` | PHP 5.6.40 | Apache 2.4.68 | Debian Bookworm |
 
 ## Quick Start
 
