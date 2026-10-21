@@ -4,6 +4,7 @@ FROM debian:bookworm-slim
 
 ARG PHP_VERSION
 ENV PHP_VERSION=${PHP_VERSION}
+ARG PHP_PKG_VERSION
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \

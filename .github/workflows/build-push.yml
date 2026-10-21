@@ -4,16 +4,28 @@ on:
   push:
     branches: [main]
     tags: ['v*']
+  schedule:
+    - cron: '0 */6 * * *'
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         php: ['7.2', '7.4', '8.0', '8.1', '8.2', '8.3']
 
     steps:
       - uses: actions/checkout@v4
+
+      - id: sury
+        run: |
+          curl -fsSL -o "$RUNNER_TEMP/Packages.gz" https://packages.sury.org/php/dists/bookworm/main/binary-amd64/Packages.gz
+          version=$(gunzip -c "$RUNNER_TEMP/Packages.gz" \
+            | awk -v pkg="php${{ matrix.php }}-cli" '$1=="Package:"{p=($2==pkg)} p&&$1=="Version:"&&!v{v=$2} END{print v}')
+          test -n "$version"
+          echo "version=$version" >> "$GITHUB_OUTPUT"
 
       - uses: docker/setup-buildx-action@v3
 
@@ -25,11 +37,28 @@ jobs:
       - uses: docker/build-push-action@v6
         with:
           context: .
-          push: true
-          build-args: PHP_VERSION=${{ matrix.php }}
+          load: true
+          build-args: |
+            PHP_VERSION=${{ matrix.php }}
+            PHP_PKG_VERSION=${{ steps.sury.outputs.version }}
           tags: inrage/docker-prestashop:${{ matrix.php }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+          cache-from: type=gha,scope=php-${{ matrix.php }}
+          cache-to: type=gha,mode=max,scope=php-${{ matrix.php }}
+
+      - run: |
+          installed=$(docker run --rm --entrypoint dpkg-query inrage/docker-prestashop:${{ matrix.php }} -W -f='${Version}' php${{ matrix.php }}-cli)
+          echo "expected=${{ steps.sury.outputs.version }} installed=$installed"
+          test "$installed" = "${{ steps.sury.outputs.version }}"
+
+      - uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          build-args: |
+            PHP_VERSION=${{ matrix.php }}
+            PHP_PKG_VERSION=${{ steps.sury.outputs.version }}
+          tags: inrage/docker-prestashop:${{ matrix.php }}
+          cache-from: type=gha,scope=php-${{ matrix.php }}
 
   tag-latest:
     runs-on: ubuntu-latest
