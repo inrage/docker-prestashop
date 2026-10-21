@@ -36,12 +36,13 @@ RUN apt-get update \
        php${PHP_VERSION}-zip \
        php${PHP_VERSION}-memcached \
        php${PHP_VERSION}-redis \
+       msmtp \
     && if dpkg --compare-versions "${PHP_VERSION}" lt "8.0"; then \
          apt-get install -y --no-install-recommends php${PHP_VERSION}-json; \
        fi \
     && if [ "${PHP_VERSION}" = "5.6" ]; then \
-         apt-get install -y --no-install-recommends php5.6-mcrypt php5.6-sqlite3 msmtp \
-         && printf '; priority=99\ndate.timezone = Europe/Paris\nsendmail_path = /usr/bin/msmtp -t\nopcache.revalidate_freq = 0\n' > /etc/php/5.6/mods-available/ps56.ini \
+         apt-get install -y --no-install-recommends php5.6-mcrypt php5.6-sqlite3 \
+         && printf '; priority=99\ndate.timezone = Europe/Paris\n' > /etc/php/5.6/mods-available/ps56.ini \
          && phpenmod -v 5.6 ps56 \
          && curl -fsSL https://downloads.ioncube.com/loader_downloads/ioncube_loaders_lin_x86-64.tar.gz \
             | tar -xz -C /tmp ioncube/ioncube_loader_lin_5.6.so \
@@ -68,6 +69,7 @@ RUN a2ensite 000-default \
     && echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
 COPY config/php/prestashop.ini /etc/php/${PHP_VERSION}/apache2/conf.d/99-prestashop.ini
+COPY config/msmtprc /etc/msmtprc
 
 RUN printf '#!/bin/bash\nset -e\n. /etc/apache2/envvars\nexec apache2 -DFOREGROUND "$@"\n' \
     > /usr/local/bin/apache2-foreground \
