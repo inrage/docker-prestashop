@@ -23,6 +23,7 @@ Key features:
 | `8.1` | PHP 8.1.34 | Apache 2.4.68 | Debian Bookworm |
 | `8.0` | PHP 8.0.30 | Apache 2.4.68 | Debian Bookworm |
 | `7.4`, `latest` | PHP 7.4.33 | Apache 2.4.68 | Debian Bookworm |
+| `7.3` | PHP 7.3.33 | Apache 2.4.68 | Debian Bookworm |
 | `7.2` | PHP 7.2.34 | Apache 2.4.68 | Debian Bookworm |
 
 ## Quick Start
