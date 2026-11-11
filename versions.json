@@ -44,12 +44,12 @@
     "8.2": {
       "php": "8.2.35",
       "apache": "2.4.68",
-      "package": "8.2.35-1+0~20261021.94+debian12~1.gbp8bff78"
+      "package": "8.2.35-2+0~deb.sury.org.1+debian12"
     },
     "8.3": {
       "php": "8.3.36",
       "apache": "2.4.68",
-      "package": "8.3.36-1+0~20261021.88+debian12~1.gbp250f7c"
+      "package": "8.3.36-2+0~deb.sury.org.1+debian12"
     }
   }
 }
