@@ -49,7 +49,7 @@
     "8.3": {
       "php": "8.3.37",
       "apache": "2.4.71",
-      "package": "8.3.37-2+debsuryorg12.1+php+1"
+      "package": "8.3.37-3+debsuryorg12.1+1"
     }
   }
 }
